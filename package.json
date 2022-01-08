@@ -1,8 +1,8 @@
 {
-  "name": "prismarine-template",
-  "version": "1.0.0",
-  "description": "A template repository to make it easy to create new prismarine repo",
-  "main": "index.js",
+  "name": "prismarine-registry",
+  "version": "0.1.0",
+  "description": "Prismarine Registry",
+  "main": "lib/index.js",
   "scripts": {
     "test": "mocha --reporter spec --exit",
     "pretest": "npm run lint",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PrismarineJS/prismarine-template.git"
+    "url": "git+https://github.com/PrismarineJS/prismarine-registry.git"
   },
   "keywords": [
     "prismarine",
@@ -20,12 +20,15 @@
   "author": "Romain Beaumont",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/PrismarineJS/prismarine-template/issues"
+    "url": "https://github.com/PrismarineJS/prismarine-registry/issues"
   },
-  "homepage": "https://github.com/PrismarineJS/prismarine-template#readme",
+  "homepage": "https://github.com/PrismarineJS/prismarine-registry#readme",
   "devDependencies": {
-    "prismarine-template": "file:.",
-    "standard": "^16.0.1",
-    "mocha": "^9.1.3"
+    "debug": "^4.3.3",
+    "minecraft-protocol": "^1.30.0",
+    "minecraft-wrap": "^1.4.0",
+    "mocha": "^9.1.3",
+    "prismarine-registry": "file:.",
+    "standard": "^16.0.1"
   }
 }
