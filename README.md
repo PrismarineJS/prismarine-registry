@@ -13,7 +13,6 @@ const registry = require('prismarine-registry')('1.18')
 
 registry.biomes.set(2, 'minecraft:ocean', { data: 'about an ocean biome' })
 console.assert(registry.biomes.getIndex('minecraft:ocean') === 2)
-
 console.log(registry.biomes.get('minecraft:ocean')) // Should get { data: 'about an ocean biome' }
 ```
 
@@ -21,7 +20,32 @@ console.log(registry.biomes.get('minecraft:ocean')) // Should get { data: 'about
 
 Calling the default default export for `prismarine-registry` with a minecraft version will create a new set of registries.
 
-A registry looks like this:
+to create a registry for version 1.18,
+
+```js
+const registry = require('prismarine-registry')('1.18')
+```
+
+and to add something to the registry,
+```js
+registry.biomes.set(2, 'minecraft:ocean', { data: 'about an ocean biome' })
+```
+
+or to push with an auto-incrementing ID,
+
+```js
+registry.biomes.add('minecraft:ocean', { data: 'about an ocean biome' })
+```
+
+to get something from registry with an index,
+
+```js
+registry.biomes.getValueAt(index) => value
+registry.biomes.getName(index) => string name
+
+```
+
+A individual registry looks like this:
 
 ```ts
   interface Registry {
