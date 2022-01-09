@@ -17,3 +17,9 @@ registry.blocksByName['stone'] // See information about stone
 ## API
 
 [See minecraft-data API](https://github.com/PrismarineJS/node-minecraft-data/blob/master/doc/api.md)
+
+### mcpc
+
+#### loadDimensionCodec / writeDimensionCodec
+
+* loads/writes data from dimension codec in login packet
