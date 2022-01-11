@@ -18,7 +18,16 @@ async function startServer (version, port = 25569) {
   })
 
   console.log('▶ Starting server', port)
-  await new Promise(resolve => vServer.startServer({ 'online-mode': 'false', 'server-port': port, 'view-distance': 2 }, resolve))
+
+  const settings = { 
+    'online-mode': 'false', 
+    'server-port': port, 
+    'view-distance': 2, 
+    'generator-settings': 'minecraft:bedrock,minecraft:grass_block;minecraft:plains;',
+    'level-type': 'flat',
+  }
+
+  await new Promise(resolve => vServer.startServer(settings, resolve))
 
   vServer.stop = async () => new Promise((resolve, reject) => vServer.stopServer(reject, resolve))
 
