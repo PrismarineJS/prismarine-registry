@@ -1,6 +1,6 @@
 const nmp = require('minecraft-protocol')
 const { startServer } = require('./downloadMcpcServer')
-const debug = console.debug // require('debug')('prismarine-registry')
+const debug = require('debug')('prismarine-registry')
 
 async function collectPackets (version, names = ['login'], cb) {
   const collected = []

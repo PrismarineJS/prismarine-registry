@@ -12,7 +12,7 @@ async function main (version = '1.18') {
     },
 
     declare_recipes (version, body) {
-
+      // todo: load recipes
     }
   }
 

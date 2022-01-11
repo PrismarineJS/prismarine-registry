@@ -2,7 +2,7 @@ const promisify = require('util').promisify
 const wrap = require('minecraft-wrap')
 const downloadServer = promisify(wrap.downloadServer)
 const path = require('path')
-const debug = console.debug // require('debug')('prismarine-registry')
+const debug = require('debug')('prismarine-registry')
 
 async function startServer (version, port = 25569) {
   const MC_SERVER_PATH = path.join(__dirname, `server_${version}`)
