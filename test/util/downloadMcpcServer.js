@@ -23,7 +23,7 @@ async function startServer (version, port = 25569) {
     'online-mode': 'false',
     'server-port': port,
     'view-distance': 2,
-    'generator-settings': 'minecraft:bedrock,minecraft:grass_block;minecraft:plains;',
+    // 'generator-settings': 'minecraft:bedrock,minecraft:grass_block;minecraft:plains;',
     'level-type': 'flat'
   }
 
