@@ -2,3 +2,5 @@ node_modules/
 package-lock.json
 .vscode
 test/**/server_*
+# mc test server
+**/versions/*/*.json
