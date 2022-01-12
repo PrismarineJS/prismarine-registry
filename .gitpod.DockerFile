@@ -1,5 +1,7 @@
 FROM gitpod/workspace-full:latest
 
+RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh \
+             && sdk install java"
 RUN bash -c ". .nvm/nvm.sh \
     && nvm install 14 \
     && nvm use 14 \

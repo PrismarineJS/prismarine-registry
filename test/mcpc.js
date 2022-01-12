@@ -1,27 +1,26 @@
 const collectPackets = require('./util/collectMcpcPackets')
-const nbt = require('prismarine-nbt')
 const Registry = require('prismarine-registry')
 
 async function main (version = '1.18') {
-  const registries = Registry(version)
+  const registry = Registry(version)
+  let loadedDimensionCodec = false
   const handlers = {
     login (version, body) {
-      const dimensionCodec = nbt.simplify(body.dimensionCodec)
-      const biomes = dimensionCodec['minecraft:worldgen/biome'].value
-      for (const { name, id, element } of biomes) {
-        registries.biomes.set(id, name, element)
-      }
+      registry.loadDimensionCodec(body.dimensionCodec)
+      console.log('Loaded dimension codec', registry.biomes)
+      loadedDimensionCodec = true
     },
 
     declare_recipes (version, body) {
-      for (const recipe of body.recipes) {
-        registries.recipes.add(recipe.recipeId, recipe)
-      }
+      // todo: load recipes
     }
   }
 
-  collectPackets(version, Object.keys(handlers), (name, body) => handlers[name](version, body))
+  await collectPackets(version, Object.keys(handlers), (name, body) => handlers[name](version, body))
+  await new Promise(resolve => setTimeout(resolve, 5000))
+  if (!loadedDimensionCodec) {
+    throw new Error('No dimension codec loaded')
+  }
 }
 
-main()
 module.exports = main
