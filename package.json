@@ -4,7 +4,7 @@
   "description": "Prismarine Registry",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha --reporter spec --exit",
+    "test": "mocha --reporter spec --bail --exit",
     "pretest": "npm run lint",
     "lint": "standard",
     "fix": "standard --fix"
@@ -32,6 +32,7 @@
     "standard": "^16.0.1"
   },
   "dependencies": {
-    "minecraft-data": "^2.106.0"
+    "minecraft-data": "^2.106.0",
+    "prismarine-nbt": "^2.0.0"
   }
 }
