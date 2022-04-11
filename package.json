@@ -32,7 +32,7 @@
     "standard": "^16.0.1"
   },
   "dependencies": {
-    "minecraft-data": "^2.106.0",
+    "minecraft-data": "^3.0.0",
     "prismarine-nbt": "^2.0.0"
   }
 }
