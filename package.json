@@ -1,6 +1,6 @@
 {
   "name": "prismarine-registry",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Prismarine Registry",
   "main": "lib/index.js",
   "scripts": {
