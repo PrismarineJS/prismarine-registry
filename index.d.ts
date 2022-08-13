@@ -1,5 +1,8 @@
-import mcData from 'minecraft-data'
+import {IndexedData} from 'minecraft-data'
 
-declare module "prismarine-registry" {
-  export default function(mcVersion: string): ReturnType<typeof mcData>
+declare function loader(mcVersion: string): IndexedData
+declare namespace loader {
+  export type Registry = IndexedData
 }
+
+export = loader
