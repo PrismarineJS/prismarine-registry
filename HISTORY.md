@@ -1,5 +1,8 @@
 ## History
 
+### 1.4.0
+* Add handling for new pc chat formatting, expose new `chatFormattingById`/`chatFormattingByName` (#16)
+
 ### 1.3.0
 
 * update dimension codec functions for pc1.19 (#14)
