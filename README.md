@@ -39,6 +39,6 @@ chat type should be formatted and what the relevant parameters are.
 }
 ```
 
-#### .dimensionsById, dimensionsByName
+#### .dimensionsById, dimensionsByName (1.19+)
 
 Mapping to dimension data object containing dimension `name`, `minY` and `height`.
