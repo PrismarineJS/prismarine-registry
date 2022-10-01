@@ -38,3 +38,7 @@ chat type should be formatted and what the relevant parameters are.
   'minecraft:emote_command': { formatString: '* %s %s', parameters: [ 'sender', 'content' ] }
 }
 ```
+
+#### .dimensionsById, dimensionsByName (1.19+)
+
+Mapping to dimension data object containing dimension `name`, `minY` and `height`.
