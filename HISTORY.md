@@ -1,5 +1,9 @@
 ## History
 
+### 1.6.0
+
+* chat for 1.19.2
+
 ### 1.5.0
 * Expose dimensions in pc1.19 codec
 
