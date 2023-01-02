@@ -1,18 +1,14 @@
 import {IndexedData} from 'minecraft-data'
 import {NBT} from 'prismarine-nbt'
 
-declare function loader(mcVersion: string): loader.Registry
-declare namespace loader {
-  export interface RegistryPc extends IndexedData {
-    loadDimensionCodec( codec: NBT ): void
-    writeDimensionCodec(): NBT
-  }
-  
-  export interface RegistryBedrock extends IndexedData {
-    
-  }
-  
-  export type Registry = RegistryBedrock | RegistryPc
+interface PCRegistry extends IndexedData {
+  loadDimensionCodec(codec: NBT): void
+  writeDimensionCodec(): NBT
 }
 
+interface BedrockRegistry extends IndexedData {
+
+}
+type Registry = PCRegistry & BedrockRegistry
+declare function loader(mcVersion: string): Registry
 export = loader
