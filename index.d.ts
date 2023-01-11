@@ -1,5 +1,5 @@
-import {IndexedData} from 'minecraft-data'
-import {NBT} from 'prismarine-nbt'
+import { IndexedData } from 'minecraft-data'
+import { NBT } from 'prismarine-nbt'
 
 declare function loader(mcVersion: string): loader.Registry
 declare namespace loader {
@@ -9,10 +9,15 @@ declare namespace loader {
   }
   
   export interface RegistryBedrock extends IndexedData {
-    
+    loadItemStates(itemStates: ItemState[]): void
   }
   
   export type Registry = RegistryBedrock | RegistryPc
+  export type ItemState = {
+    name: string
+    runtime_id: number
+    component_based: boolean
+  }
 }
 
 export = loader
