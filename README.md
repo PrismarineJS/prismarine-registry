@@ -42,3 +42,22 @@ chat type should be formatted and what the relevant parameters are.
 #### .dimensionsById, dimensionsByName (1.19+)
 
 Mapping to dimension data object containing dimension `name`, `minY` and `height`.
+
+### mcpe
+
+#### loadItemStates
+
+* loads data from an item states array inside the bedrock start game packet.
+
+```js
+const { createClient } = require('bedrock-protocol');
+const registry = require('prismarine-registry')('bedrock_1.19.50');
+
+const client = createClient({
+  'host': '127.0.0.1'
+})
+
+client.on('start_game', ({ itemstates }) => {
+  registry.loadItemStates(itemstates);
+})
+```
