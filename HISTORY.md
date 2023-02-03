@@ -1,5 +1,9 @@
 ## History
 
+### 1.7.0
+
+* Parse minecraft:raw chat type
+
 ### 1.6.0
 
 * chat for 1.19.2
