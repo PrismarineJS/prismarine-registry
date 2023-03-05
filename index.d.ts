@@ -9,7 +9,8 @@ declare namespace loader {
   }
   
   export interface RegistryBedrock extends IndexedData {
-    loadItemStates(itemStates: ItemState[]): void
+    loadItemStates(itemStates: ItemState[]): void;
+    writeItemStates(): ItemState[];
   }
   
   export type Registry = RegistryBedrock | RegistryPc
