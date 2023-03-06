@@ -4,8 +4,8 @@ import { NBT } from 'prismarine-nbt'
 declare function loader(mcVersion: string): loader.Registry
 declare namespace loader {
   export interface RegistryPc extends IndexedData {
-    loadDimensionCodec( codec: NBT ): void
-    writeDimensionCodec(): NBT
+    loadDimensionCodec(codec: NBT): void;
+    writeDimensionCodec(): NBT;
   }
   
   export interface RegistryBedrock extends IndexedData {
