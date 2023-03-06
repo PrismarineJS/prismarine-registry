@@ -1,6 +1,6 @@
 const Registry = require('prismarine-registry')
 const collectPackets = require('./util/collectBedrockPackets')
-// const assert = require('assert')
+const assert = require('assert')
 
 async function main (version = '1.19.63') {
   const registry = Registry(`bedrock_${version}`)
@@ -13,12 +13,11 @@ async function main (version = '1.19.63') {
       registry.loadItemStates(params.itemstates)
       console.log('Loaded item palette', registry.items)
 
-      registry.writeItemStates()
-      // TODO: implement component_based so that this works
-      // assert.deepEqual(
-      //   reEncoded.sort((a, b) => a.runtime_id - b.runtime_id),
-      //   params.itemstates.sort((a, b) => a.runtime_id - b.runtime_id)
-      // )
+      const reEncoded = registry.writeItemStates()
+      assert.deepEqual(
+        reEncoded.sort((a, b) => a.runtime_id - b.runtime_id),
+        params.itemstates.sort((a, b) => a.runtime_id - b.runtime_id)
+      )
       console.log('Re-encoded item palette')
     }
   }
