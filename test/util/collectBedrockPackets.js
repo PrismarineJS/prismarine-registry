@@ -16,7 +16,7 @@ async function collectPackets (version, names = ['start_game'], cb) {
   console.log('Started server', version)
 
   const client = bedrock.createClient({
-    version: version,
+    version,
     host: '127.0.0.1',
     port: 19130,
     username: 'test',
