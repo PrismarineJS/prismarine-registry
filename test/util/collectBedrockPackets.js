@@ -13,7 +13,7 @@ async function collectPackets (version, names = ['start_game'], cb) {
     })
   })
 
-  console.log('Started server')
+  console.log('Started server', version)
 
   const client = bedrock.createClient({
     version: version,
@@ -40,7 +40,7 @@ async function collectPackets (version, names = ['start_game'], cb) {
   client.on('packet', ({ name }) => debug('[client] -> ', name))
 
   setTimeout(() => {
-    console.log('Stopping server')
+    console.log('Stopping server', version)
     server.kill()
     client.close()
     if (!clientConnected) {
