@@ -22,7 +22,7 @@ async function main (version = '1.19.63') {
   }
 
   await collectPackets(version, Object.keys(handlers), (name, params) => handlers[name](version, params))
-  await new Promise((resolve) => setTimeout(resolve, 5000))
+  await new Promise((resolve) => setTimeout(resolve, 6000))
   if (!loggedIn) {
     throw new Error('Did not login')
   }
