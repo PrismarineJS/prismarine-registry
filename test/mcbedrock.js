@@ -6,9 +6,6 @@ async function main (version = '1.19.63') {
   const registry = Registry(`bedrock_${version}`)
   let loggedIn = false
   const handlers = {
-    play_status (version, params) {
-      if (params.status === 'login_success') loggedIn = true
-    },
     start_game (version, params) {
       registry.loadItemStates(params.itemstates)
       console.log('Loaded item palette', registry.items)
@@ -19,6 +16,8 @@ async function main (version = '1.19.63') {
         params.itemstates.sort((a, b) => a.runtime_id - b.runtime_id)
       )
       console.log('Re-encoded item palette')
+
+      loggedIn = true
     }
   }
 
