@@ -1,5 +1,11 @@
 ## History
 
+### 1.8.0
+
+* pc 1.20.5
+* throw error on no data
+* bedrock
+
 ### 1.7.0
 
 * Parse minecraft:raw chat type
