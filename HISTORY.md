@@ -1,5 +1,10 @@
 ## History
 
+### 1.9.0
+* [Create commands.yml](https://github.com/PrismarineJS/prismarine-registry/commit/1252f261d171ac1398bfebbd124cd5b79477d684) (thanks @rom1504)
+* [Remove debug logging (#40)](https://github.com/PrismarineJS/prismarine-registry/commit/711af2a979af8f76ce9c4f4c7c23701eaf2cb613) (thanks @extremeheat)
+* [Increase timeout for bedrock more.](https://github.com/PrismarineJS/prismarine-registry/commit/ae86b03449a007dc5a1ae2d3354201f0df28c588) (thanks @rom1504)
+
 ### 1.8.0
 
 * pc 1.20.5
