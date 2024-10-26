@@ -1,5 +1,9 @@
 ## History
 
+### 1.10.0
+* [Update chat_type handler (#42)](https://github.com/PrismarineJS/prismarine-registry/commit/065405410bcb13b00597c18ccc78a3749daafb23) (thanks @SuperGamerTron)
+* [Disable bedrock test.](https://github.com/PrismarineJS/prismarine-registry/commit/09e80105f354af3405f18c965370621f785136d5) (thanks @rom1504)
+
 ### 1.9.0
 * [Create commands.yml](https://github.com/PrismarineJS/prismarine-registry/commit/1252f261d171ac1398bfebbd124cd5b79477d684) (thanks @rom1504)
 * [Remove debug logging (#40)](https://github.com/PrismarineJS/prismarine-registry/commit/711af2a979af8f76ce9c4f4c7c23701eaf2cb613) (thanks @extremeheat)
