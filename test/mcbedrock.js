@@ -7,7 +7,9 @@ async function main (version = '1.19.63') {
   let loggedIn = false
   const handlers = {
     start_game (version, params) {
-      registry.loadItemStates(params.itemstates)
+      console.log('Loading item palette and custom blocks')
+      registry.handleStartGame(params)
+
       console.log('Loaded item palette', registry.items)
 
       const reEncoded = registry.writeItemStates()
