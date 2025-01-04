@@ -1,5 +1,9 @@
 ## History
 
+### 1.11.0
+* [Support for hashed block network ID's (#33)](https://github.com/PrismarineJS/prismarine-registry/commit/f3bc5c6f4f30c9226ff06115a0ea35632b81f19c) (thanks @FreezeEngine)
+* [Bump mocha from 10.8.2 to 11.0.1 (#45)](https://github.com/PrismarineJS/prismarine-registry/commit/18a2d526ce6fa69824ef2b6d94442099e046d3f6) (thanks @dependabot[bot])
+
 ### 1.10.0
 * [Update chat_type handler (#42)](https://github.com/PrismarineJS/prismarine-registry/commit/065405410bcb13b00597c18ccc78a3749daafb23) (thanks @SuperGamerTron)
 * [Disable bedrock test.](https://github.com/PrismarineJS/prismarine-registry/commit/09e80105f354af3405f18c965370621f785136d5) (thanks @rom1504)
