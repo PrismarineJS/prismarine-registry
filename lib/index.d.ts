@@ -9,7 +9,7 @@ declare namespace loader {
   }
   
   export interface RegistryBedrock extends IndexedData {
-    loadItemStates(itemStates: ItemState[]): void;
+    handleStartGame(packet: any): void;
     writeItemStates(): ItemState[];
   }
   
