@@ -58,13 +58,18 @@ const client = createClient({
   'host': '127.0.0.1'
 })
 
-client.on('start_game', ({ itemstates }) => {
-  registry.loadItemStates(itemstates);
+client.on('start_game', ({ itemstates, block_network_ids_are_hashes }) => {
+  registry.handleStartGame({ itemstates, block_network_ids_are_hashes});
+})
+
+client.on('item_registry', ({ itemstates }) => {
+  registry.handleStartGame({ itemstates });
 })
 
 // In a server
 server.on('connect', (client) => {
   const itemstates = registry.writeItemStates()
-  client.write('start_game', { ...startGamePacket, itemstates })
+  client.write('start_game', { ...startGamePacket, itemstates }) // version < 1.21.70
+  client.write('item_registry', { itemstates }) // version >= 1.21.70
 })
 ```

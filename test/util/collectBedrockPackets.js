@@ -14,7 +14,6 @@ async function collectPackets (version, names = ['start_game'], cb) {
   })
 
   console.log('Started server', version)
-
   const client = bedrock.createClient({
     version,
     host: '127.0.0.1',
@@ -25,28 +24,39 @@ async function collectPackets (version, names = ['start_game'], cb) {
 
   let clientConnected = false
 
-  client.on('join', () => {
-    console.log('[client] Client connected')
-    clientConnected = true
+  return new Promise((resolve, reject) => {
+    const timeoutId = setTimeout(reject, 9000)
+
+    client.on('join', () => {
+      console.log('[client] Client connected')
+      clientConnected = true
+    })
+
+    for (const name of names) {
+      client.on(name, (packet) => {
+        cb(name, packet)
+        collected.push(packet)
+
+        if (collected.length === names.length) {
+          clearTimeout(timeoutId)
+          resolve()
+        }
+      })
+    }
+
+    client.on('packet', ({ name }) => debug('[client] -> ', name))
+  }).finally(() => {
+    stopServer()
   })
 
-  for (const name of names) {
-    client.on(name, (packet) => {
-      cb(name, packet)
-      collected.push(packet)
-    })
-  }
-
-  client.on('packet', ({ name }) => debug('[client] -> ', name))
-
-  setTimeout(() => {
+  function stopServer () {
     console.log('Stopping server', version)
     server.kill()
     client.close()
     if (!clientConnected) {
       throw new Error('Client never connected')
     }
-  }, 9000)
+  }
 }
 
 module.exports = collectPackets
