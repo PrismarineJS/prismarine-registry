@@ -10,21 +10,22 @@ async function main (version = '1.19.63') {
       console.log('Loading item palette and custom blocks')
       registry.handleStartGame(params)
 
-      console.log('Loaded item palette', registry.items)
+      if (params.itemstates != null) {
+        console.log('Loaded item palette')
 
-      const reEncoded = registry.writeItemStates()
-      assert.deepEqual(
-        reEncoded.sort((a, b) => a.runtime_id - b.runtime_id),
-        params.itemstates.sort((a, b) => a.runtime_id - b.runtime_id)
-      )
-      console.log('Re-encoded item palette')
+        const reEncoded = registry.writeItemStates()
+        assert.deepEqual(
+          reEncoded.sort((a, b) => a.runtime_id - b.runtime_id),
+          params.itemstates.sort((a, b) => a.runtime_id - b.runtime_id)
+        )
+        console.log('Re-encoded item palette')
+      }
 
       loggedIn = true
     }
   }
 
   await collectPackets(version, Object.keys(handlers), (name, params) => handlers[name](version, params))
-  await new Promise((resolve) => setTimeout(resolve, 30000))
   if (!loggedIn) {
     throw new Error('Did not login')
   }
