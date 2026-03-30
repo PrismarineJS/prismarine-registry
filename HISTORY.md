@@ -1,5 +1,11 @@
 ## History
 
+### 1.12.0
+* [Update CI to Node 24 (#55)](https://github.com/PrismarineJS/prismarine-registry/commit/92e1600b9b29046b4d679ffde9e9aaa26808cf83) (thanks @rom1504)
+* [Fix publish condition for npm-publish v4 (#54)](https://github.com/PrismarineJS/prismarine-registry/commit/640a9f50384e8edde6163f113598804d30027405) (thanks @rom1504)
+* [Switch to trusted publishing via OIDC (#53)](https://github.com/PrismarineJS/prismarine-registry/commit/adba65a4fb80ef102bdf17c2e0c695d9f347576f) (thanks @rom1504)
+* [node 22 (#48)](https://github.com/PrismarineJS/prismarine-registry/commit/f6af8863eb508fe5f3d75a7a8dccb388fa8e089d) (thanks @mc-zuri)
+
 ### 1.11.0
 * [Support for hashed block network ID's (#33)](https://github.com/PrismarineJS/prismarine-registry/commit/f3bc5c6f4f30c9226ff06115a0ea35632b81f19c) (thanks @FreezeEngine)
 * [Bump mocha from 10.8.2 to 11.0.1 (#45)](https://github.com/PrismarineJS/prismarine-registry/commit/18a2d526ce6fa69824ef2b6d94442099e046d3f6) (thanks @dependabot[bot])
