@@ -73,3 +73,33 @@ server.on('connect', (client) => {
   client.write('item_registry', { itemstates }) // version >= 1.21.70
 })
 ```
+
+#### handleStartGame and hashed runtime ids
+
+`handleStartGame(packet)` (re)builds the block registry from the `start_game` packet.
+On versions with the `blockHashes` feature (1.19.80+) the server reports, via
+`packet.block_network_ids_are_hashes`, whether block runtime/state ids are generated
+from a hash of the block's name + states instead of from a sequential block-state index.
+
+When hashes are in use (`block_network_ids_are_hashes: true`), all of the block indexes
+are remapped so they resolve by the network id:
+
+* `blocks`, `blocksByName`, `blocksArray`, `blocksByStateId`, `blockStates`,
+  `blocksByRuntimeId` and each block's `defaultState` / `states` use the hashed ids.
+* Hashed ids are not contiguous, so `block.minStateId` / `block.maxStateId` are `undefined`
+  and the full list of a block's state ids is available in `block.states`.
+
+With the legacy scheme (`block_network_ids_are_hashes` falsy, or pre-`blockHashes` versions)
+the sequential block-state indices are kept, including `minStateId` / `maxStateId`.
+
+In both schemes `blocksByStateId[id]` / `blocksByRuntimeId[id]` resolve a block from its
+network id. `handleStartGame` may be called multiple times (it always re-derives from the
+underlying minecraft-data, so re-remapping — even switching schemes — is safe).
+
+```js
+registry.handleStartGame({ itemstates, block_network_ids_are_hashes })
+
+const block = registry.blocksByName.diamond_block
+block.states         // e.g. [1460042000] (hashes) or [1276] (indices)
+registry.blocksByStateId[block.defaultState] // -> the block
+```
