@@ -27,6 +27,8 @@ jobs:
         java-version: 17
         java-package: jre
     - run: npm install
+    - name: TEMP use prismarine-block#129
+      run: cd node_modules && rm -rf prismarine-block && git clone -b fix/hashed-runtime-metadata --depth 1 https://github.com/Pix3lPirat3/prismarine-block
     - run: npm test
 
   # Stable branch-protection check; every required matrix job must pass.
