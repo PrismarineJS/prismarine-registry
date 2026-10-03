@@ -45,9 +45,11 @@ Mapping to dimension data object containing dimension `name`, `minY` and `height
 
 ### mcpe
 
-#### loadItemStates / writeItemStates
+#### handleStartGame / handleItemRegistry / writeItemStates
 
-* loads/writes data from an item states array inside the bedrock start game packet.
+* `handleStartGame(packet)` loads the item states of the `start_game` packet and remaps the blocks (see below).
+* `handleItemRegistry(packet)` loads the item states of the `item_registry` packet (1.21.70+), without touching the blocks.
+* `writeItemStates()` returns the item states to send in these packets.
 
 ```js
 // In a client
@@ -63,13 +65,14 @@ client.on('start_game', ({ itemstates, block_network_ids_are_hashes }) => {
 })
 
 client.on('item_registry', ({ itemstates }) => {
-  registry.handleStartGame({ itemstates });
+  registry.handleItemRegistry({ itemstates });
 })
 
 // In a server
 server.on('connect', (client) => {
   const itemstates = registry.writeItemStates()
   client.write('start_game', { ...startGamePacket, itemstates }) // version < 1.21.70
+  client.write('start_game', { ...startGamePacket }) // version >= 1.21.70
   client.write('item_registry', { itemstates }) // version >= 1.21.70
 })
 ```
@@ -85,15 +88,19 @@ When hashes are in use (`block_network_ids_are_hashes: true`), all of the block 
 are remapped so they resolve by the network id:
 
 * `blocks`, `blocksByName`, `blocksArray`, `blocksByStateId`, `blockStates`,
-  `blocksByRuntimeId` and each block's `defaultState` / `states` use the hashed ids.
+  `blockStatesByStateId`, `blocksByRuntimeId` and each block's `defaultState` / `states`
+  use the hashed ids.
 * Hashed ids are not contiguous, so `block.minStateId` / `block.maxStateId` are `undefined`
   and the full list of a block's state ids is available in `block.states`.
 
 With the legacy scheme (`block_network_ids_are_hashes` falsy, or pre-`blockHashes` versions)
 the sequential block-state indices are kept, including `minStateId` / `maxStateId`.
 
-In both schemes `blocksByStateId[id]` / `blocksByRuntimeId[id]` resolve a block from its
-network id. `handleStartGame` may be called multiple times (it always re-derives from the
+In both schemes `blocksByStateId[id]` / `blocksByRuntimeId[id]` resolve a block, and
+`blockStatesByStateId[id]` its block state (`name`, `states`), from its network id. Before
+`handleStartGame` is called, `blocksByStateId` and `blockStatesByStateId` use the sequential
+block-state indices and `blocksByRuntimeId` is not built yet.
+`handleStartGame` may be called multiple times (it always re-derives from the
 underlying minecraft-data, so re-remapping — even switching schemes — is safe).
 
 ```js
@@ -102,4 +109,5 @@ registry.handleStartGame({ itemstates, block_network_ids_are_hashes })
 const block = registry.blocksByName.diamond_block
 block.states         // e.g. [1460042000] (hashes) or [1276] (indices)
 registry.blocksByStateId[block.defaultState] // -> the block
+registry.blockStatesByStateId[block.defaultState] // -> its block state ({ name, states, ... })
 ```
