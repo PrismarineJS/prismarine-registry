@@ -124,6 +124,26 @@ describe('bedrock hashed runtime ids', function () {
     assert.deepStrictEqual(registry.blocksByName.diamond_block.states, [DIAMOND_HASH])
   })
 
+  it('indexes block states by their state id', function () {
+    const { registry } = setup()
+    // before start_game, state ids are the indexes into blockStates
+    assert.strictEqual(registry.blockStatesByStateId[DIAMOND_INDEX], registry.blockStates[DIAMOND_INDEX])
+
+    for (const hashes of [true, false]) {
+      registry.handleStartGame({ itemstates: [], block_network_ids_are_hashes: hashes })
+      const stateId = hashes ? DIAMOND_HASH : DIAMOND_INDEX
+      assert.strictEqual(registry.blockStatesByStateId[stateId], registry.blockStates[DIAMOND_INDEX])
+
+      // and with it prismarine-block resolves the properties of hashed state ids
+      const Block = require('prismarine-block')(registry)
+      const log = registry.blocksByName.oak_log
+      for (const id of log.states) {
+        assert.strictEqual(registry.blockStatesByStateId[id].name, 'oak_log')
+        assert(Block.fromStateId(id, 0).getProperties().pillar_axis)
+      }
+    }
+  })
+
   it('does not mutate the shared minecraft-data structures', function () {
     const minecraftData = require('minecraft-data')(`bedrock_${VERSION}`)
     const keys = ['blocksArray', 'blocks', 'blocksByName', 'blocksByStateId', 'blockStates']
