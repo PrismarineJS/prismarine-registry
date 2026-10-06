@@ -41,11 +41,7 @@ async function main (version = '1.19.63') {
     throw new Error('Did not login')
   }
 
-  const reEncoded = registry.writeItemStates()
-  assert.deepStrictEqual(
-    reEncoded.sort((a, b) => a.runtime_id - b.runtime_id),
-    itemstates.sort((a, b) => a.runtime_id - b.runtime_id)
-  )
+  assert.deepStrictEqual(registry.writeItemStates(), itemstates)
   console.log('Re-encoded item palette')
 }
 
