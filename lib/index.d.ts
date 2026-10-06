@@ -26,6 +26,8 @@ declare namespace loader {
     name: string
     runtime_id: number
     component_based: boolean
+    version?: 'legacy' | 'data_driven' | 'none'
+    nbt?: NBT
   }
 }
 
