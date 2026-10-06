@@ -162,3 +162,17 @@ describe('bedrock hashed runtime ids', function () {
     }
   })
 })
+
+describe('bedrock item palette', function () {
+  it('writes back every field of the item states it loaded', function () {
+    const registry = require('prismarine-registry')('bedrock_1.21.70')
+    const nbt = { type: 'compound', name: '', value: {} }
+    const itemstates = [
+      { name: 'minecraft:stone', runtime_id: 1, component_based: false, version: 'none', nbt },
+      { name: 'minecraft:wolf_armor', runtime_id: 2, component_based: true, version: 'data_driven', nbt },
+      { name: 'custom:item', runtime_id: 3, component_based: true, version: 'data_driven', nbt }
+    ]
+    registry.handleItemRegistry({ itemstates })
+    assert.deepStrictEqual(registry.writeItemStates(), itemstates)
+  })
+})

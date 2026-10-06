@@ -37,16 +37,16 @@ async function main (version = '1.19.63') {
 
   await collectPackets(version, packets, (name, params) => handlers[name](version, params))
 
-  const reEncoded = registry.writeItemStates()
-  reEncoded.sort((a, b) => a.runtime_id - b.runtime_id)
-  itemstates.sort((a, b) => a.runtime_id - b.runtime_id)
-
-  assert.deepEqual(reEncoded[0], itemstates[0])
-  console.log('Re-encoded item palette')
-
   if (itemstates === undefined) {
     throw new Error('Did not login')
   }
+
+  const reEncoded = registry.writeItemStates()
+  assert.deepStrictEqual(
+    reEncoded.sort((a, b) => a.runtime_id - b.runtime_id),
+    itemstates.sort((a, b) => a.runtime_id - b.runtime_id)
+  )
+  console.log('Re-encoded item palette')
 }
 
 module.exports = main
