@@ -176,4 +176,79 @@ describe('bedrock item palette', function () {
     registry.handleItemRegistry({ itemstates })
     assert.deepStrictEqual(registry.writeItemStates(), itemstates)
   })
+
+  describe('items from their components', function () {
+    const nbt = require('prismarine-nbt')
+    const dataDriven = (components) => nbt.comp({ components: nbt.comp({ item_properties: nbt.comp({ max_stack_size: nbt.int(1) }), ...components }) }, '')
+    const itemstates = [
+      {
+        name: 'custom:ruby_sword',
+        runtime_id: 1000,
+        component_based: true,
+        version: 'data_driven',
+        nbt: dataDriven({
+          'minecraft:durability': nbt.comp({ max_durability: nbt.int(250), damage_chance: nbt.comp({ min: nbt.int(100), max: nbt.int(100) }) }),
+          'minecraft:display_name': nbt.comp({ value: nbt.string('Ruby Sword') }),
+          'minecraft:repairable': nbt.comp({
+            repair_items: nbt.list(nbt.comp([
+              { items: nbt.list(nbt.comp([{ name: nbt.string('minecraft:diamond') }])), repair_amount: nbt.float(10) },
+              { items: nbt.list(nbt.comp([{ tags: nbt.string("q.any_tag('minecraft:planks')") }])), repair_amount: nbt.float(5) }
+            ]))
+          })
+        })
+      },
+      {
+        name: 'custom:apple',
+        runtime_id: 1001,
+        component_based: true,
+        version: 'data_driven',
+        nbt: dataDriven({ 'minecraft:display_name': nbt.comp({ value: nbt.string('item.apple.name') }) })
+      },
+      {
+        name: 'custom:seeds',
+        runtime_id: 1002,
+        component_based: false,
+        version: 'legacy',
+        nbt: nbt.comp({ components: nbt.comp({ 'minecraft:max_stack_size': nbt.int(16) }) }, '')
+      },
+      { name: 'custom:empty', runtime_id: 1003, component_based: false, version: 'none', nbt: nbt.comp({}, '') },
+      { name: 'minecraft:apple', runtime_id: 1004, component_based: true, version: 'data_driven', nbt: dataDriven({}) }
+    ]
+
+    function load () {
+      const registry = require('prismarine-registry')('bedrock_1.21.70')
+      registry.handleItemRegistry({ itemstates })
+      return registry
+    }
+
+    it('takes the stack size, durability, name and repair items of the components', function () {
+      const { name, stackSize, maxDurability, displayName, repairWith } = load().itemsByName['custom:ruby_sword']
+      // the repair items given by a tag are left out
+      assert.deepStrictEqual({ name, stackSize, maxDurability, displayName, repairWith },
+        { name: 'custom:ruby_sword', stackSize: 1, maxDurability: 250, displayName: 'Ruby Sword', repairWith: ['diamond'] })
+    })
+
+    it('translates a display name that is a language key', function () {
+      assert.strictEqual(load().itemsByName['custom:apple'].displayName, 'Apple')
+    })
+
+    it('takes the stack size of a legacy item', function () {
+      assert.strictEqual(load().itemsByName['custom:seeds'].stackSize, 16)
+    })
+
+    it('takes nothing from an empty nbt', function () {
+      const { stackSize, maxDurability, displayName, repairWith } = load().itemsByName['custom:empty']
+      assert.deepStrictEqual([stackSize, maxDurability, displayName, repairWith], [undefined, undefined, undefined, undefined])
+    })
+
+    it('keeps the minecraft-data fields of vanilla items', function () {
+      const registry = load()
+      const { stackSize, displayName } = registry.itemsByName.apple
+      assert.deepStrictEqual([stackSize, displayName], [64, 'Apple'])
+    })
+
+    it('writes back the item states unchanged', function () {
+      assert.deepStrictEqual(load().writeItemStates(), itemstates)
+    })
+  })
 })
