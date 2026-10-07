@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-const SUPPORTED_VERSIONS = ['1.17.10', '1.18.0', '1.18.11', '1.18.30', '1.19.1', '1.19.10', '1.21.70']
+const SUPPORTED_VERSIONS = ['1.17.10', '1.18.0', '1.18.11', '1.18.30', '1.19.1', '1.19.10', '1.21.50', '1.21.60', '1.21.70']
 const test = require('./mcbedrock')
 const assert = require('assert')
 const { sleep } = require('./util/sleep')

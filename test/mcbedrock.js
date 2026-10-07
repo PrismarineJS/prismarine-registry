@@ -1,11 +1,9 @@
 const Registry = require('prismarine-registry')
 const collectPackets = require('./util/collectBedrockPackets')
 const assert = require('assert')
-const { versions } = require('minecraft-data')
 
 async function main (version = '1.19.63') {
   const registry = Registry(`bedrock_${version}`)
-  const Versions = Object.fromEntries(versions.bedrock.filter(e => e.releaseType === 'release').map(e => [e.minecraftVersion, e.version]))
 
   let itemstates
   const handlers = {
@@ -31,7 +29,7 @@ async function main (version = '1.19.63') {
       console.log('Loaded item palette', registry.items)
     }
   }
-  const packets = Versions[version] >= Versions['1.21.70']
+  const packets = registry.supportFeature('itemRegistryPacket')
     ? ['start_game', 'item_registry']
     : ['start_game']
 

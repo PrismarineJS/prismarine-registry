@@ -48,7 +48,7 @@ Mapping to dimension data object containing dimension `name`, `minY` and `height
 #### handleStartGame / handleItemRegistry / writeItemStates
 
 * `handleStartGame(packet)` loads the item states of the `start_game` packet and remaps the blocks (see below).
-* `handleItemRegistry(packet)` loads the item states of the `item_registry` packet (1.21.70+), without touching the blocks.
+* `handleItemRegistry(packet)` loads the item states of the `item_registry` packet (1.21.60+), without touching the blocks.
 * `writeItemStates()` returns the item states to send in these packets.
 
 ```js
@@ -71,9 +71,9 @@ client.on('item_registry', ({ itemstates }) => {
 // In a server
 server.on('connect', (client) => {
   const itemstates = registry.writeItemStates()
-  client.write('start_game', { ...startGamePacket, itemstates }) // version < 1.21.70
-  client.write('start_game', { ...startGamePacket }) // version >= 1.21.70
-  client.write('item_registry', { itemstates }) // version >= 1.21.70
+  client.write('start_game', { ...startGamePacket, itemstates }) // version < 1.21.60
+  client.write('start_game', { ...startGamePacket }) // version >= 1.21.60
+  client.write('item_registry', { itemstates }) // version >= 1.21.60
 })
 ```
 
