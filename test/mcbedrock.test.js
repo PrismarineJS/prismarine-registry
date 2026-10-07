@@ -9,7 +9,8 @@ describe('mcbedrock', function () {
   this.timeout(18000 * 10)
 
   for (const version of SUPPORTED_VERSIONS) {
-    it('works on ' + version, async () => {
+    // starts a vanilla server; skipped until it reads recorded packets instead
+    it.skip('works on ' + version, async () => {
       await test(version)
       await sleep(200)
     })
