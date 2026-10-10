@@ -9,15 +9,25 @@ declare namespace loader {
   }
   
   export interface RegistryBedrock extends IndexedData {
+    blockStatesByStateId: { [stateId: number]: BlockState };
     handleStartGame(packet: any): void;
+    handleItemRegistry(packet: any): void;
     writeItemStates(): ItemState[];
   }
   
   export type Registry = RegistryBedrock | RegistryPc
+  export type BlockState = {
+    name: string
+    states: { [name: string]: { type: string, value: unknown } }
+    version?: number
+    stateId?: number
+  }
   export type ItemState = {
     name: string
     runtime_id: number
     component_based: boolean
+    version?: 'legacy' | 'data_driven' | 'none'
+    nbt?: NBT
   }
 }
 

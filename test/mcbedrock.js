@@ -4,30 +4,43 @@ const assert = require('assert')
 
 async function main (version = '1.19.63') {
   const registry = Registry(`bedrock_${version}`)
-  let loggedIn = false
+
+  let itemstates
   const handlers = {
     start_game (version, params) {
-      console.log('Loading item palette and custom blocks')
+      const action = params.itemstates
+        ? 'item palette and custom blocks'
+        : 'custom blocks'
+
+      console.log(`Loading ${action}`)
+
       registry.handleStartGame(params)
+      itemstates = params.itemstates
+
+      console.log(`loaded ${action}`)
+    },
+
+    item_registry (version, params) {
+      console.log('Loading item palette', registry.items)
+
+      registry.handleItemRegistry(params)
+      itemstates = params.itemstates
 
       console.log('Loaded item palette', registry.items)
-
-      const reEncoded = registry.writeItemStates()
-      assert.deepEqual(
-        reEncoded.sort((a, b) => a.runtime_id - b.runtime_id),
-        params.itemstates.sort((a, b) => a.runtime_id - b.runtime_id)
-      )
-      console.log('Re-encoded item palette')
-
-      loggedIn = true
     }
   }
+  const packets = registry.supportFeature('itemRegistryPacket')
+    ? ['start_game', 'item_registry']
+    : ['start_game']
 
-  await collectPackets(version, Object.keys(handlers), (name, params) => handlers[name](version, params))
-  await new Promise((resolve) => setTimeout(resolve, 30000))
-  if (!loggedIn) {
+  await collectPackets(version, packets, (name, params) => handlers[name](version, params))
+
+  if (itemstates === undefined) {
     throw new Error('Did not login')
   }
+
+  assert.deepStrictEqual(registry.writeItemStates(), itemstates)
+  console.log('Re-encoded item palette')
 }
 
 module.exports = main
